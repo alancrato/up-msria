@@ -1,0 +1,8 @@
+<ion-content [fullscreen]="true">
+    <ion-card *ngFor="let item of posts" class="mb-2-5">
+        <ion-card-header [innerHTML]="item.title.rendered"></ion-card-header>
+        <ion-card-content>
+            <object class="embed-video" [data]="item.iframe | KeepUrl"></object>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

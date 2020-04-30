@@ -1,0 +1,7 @@
+{
+  "name": "app-observador",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

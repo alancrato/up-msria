@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-row>
+      <ion-col size="2">
+        <ion-buttons>
+          <ion-back-button text="" defaultHref="/"></ion-back-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col size="8">
+        <ion-title>{{categoryName}}</ion-title>
+      </ion-col>
+      <!--<ion-col size="2"><ion-icon name="bookmark-outline"></ion-icon></ion-col>-->
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content class="mt-1" *ngFor="let item of posts" [routerLink]="'/single/'+item.id">
+
+      <div *ngIf="item.title.rendered && item.better_featured_image !== null; then thenBlock else elseBlock"></div>
+
+      <ng-template #thenBlock>
+        <ion-list lines="none">
+          <ion-item>
+            <ion-thumbnail>
+              <img [src]="item.better_featured_image.media_details.sizes.thumbnail.source_url" alt=""/>
+            </ion-thumbnail>
+            <ion-label *ngIf="item.title.rendered">
+              <ion-row>
+                <ion-col size="12">
+                </ion-col>
+              </ion-row>
+              <div class="title-ion-item" [innerHTML]="item.title.rendered"></div>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ng-template>
+
+      <ng-template #elseBlock>
+        <ion-list lines="none" *ngIf="item.title.rendered">
+          <ion-item>
+            <ion-label>
+              <ion-row>
+                <ion-col size="12">
+                  <div class="title-ion-item-init" [innerHTML]="item.title.rendered"></div>
+                </ion-col>
+              </ion-row>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ng-template>
+
+      <div *ngIf="!item.title.rendered">
+        <ion-list lines="none">
+          <ion-item>
+            <ion-label>
+              <ion-row>
+                <ion-col size="12">
+                  <div class="title-pub">{{item.title}}</div>
+                  <div class="box-pub"></div>
+                </ion-col>
+              </ion-row>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="divider mt-1 mb-1"></div>
+    </ion-card-content>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+              loadingSpinner="bubbles"
+              loadingText="Carregando...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-card>
+</ion-content>

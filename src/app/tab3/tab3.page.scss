@@ -1,0 +1,50 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+ion-title{
+  font-weight: 200;
+}
+
+.embed-video {
+  width: 100%;
+  height: 225px;
+}
+
+iframe{
+  width: 100%;
+  height: 225px;
+}
+
+ion-card{
+  background-color: black;
+  border-radius: 0;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+ion-card-header{
+  color: white;
+}
+
+ion-card-content{
+  padding: 0;
+  margin: 0;
+}
+
+.mt-2{
+  margin-top: 2rem;
+}
+
+.mb-2{
+  margin-bottom: 2rem;
+}
+
+.mb-2-5{
+  margin-bottom: 2.5rem;
+}
+
+.title-tv{
+  margin: 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+}

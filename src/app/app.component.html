@@ -1,0 +1,45 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu menuId="first" contentId="main-content" type="overlay">
+      <ion-content>
+
+        <ion-card color="primary">
+          <ion-card-header>
+            <ion-card-title><img src="assets/icone.png"/> Site Miséria</ion-card-title>
+            <ion-card-subtitle>Aconteceu? Tá no Miséria</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+
+        <ion-list id="inbox-list">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item (click)="selectedIndex = i" routerDirection="push" [routerLink]="'/category/'+p.category_id" lines="none" detail="false" [class.selected]="selectedIndex == i">
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+        <div class="divider"></div>
+
+        <ion-list lines="none">
+          <ion-item>
+            <ion-icon name="logo-whatsapp"></ion-icon> (88) 9 9729-8426
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-facebook"></ion-icon> facebook.com/sitemiseria
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-instagram"></ion-icon> instagram.com/sitemiseria
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-youtube"></ion-icon> youtube.com/tvmiseria
+          </ion-item>
+          <ion-item>
+            <ion-icon name="call-outline"></ion-icon> Comercial (88) 9 9704-7000
+          </ion-item>
+        </ion-list>
+
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>
