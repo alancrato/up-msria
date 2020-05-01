@@ -1,8 +1,9 @@
 <ion-content [fullscreen]="true">
-    <ion-card *ngFor="let item of posts" class="mb-2-5">
+    <div *ngFor="let item of posts" class="mb-2">
         <ion-card-header [innerHTML]="item.title.rendered"></ion-card-header>
         <ion-card-content>
             <object class="embed-video" [data]="item.iframe | KeepUrl"></object>
         </ion-card-content>
-    </ion-card>
+        <div class="divider mt-4"></div>
+    </div>
 </ion-content>
