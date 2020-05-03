@@ -85,28 +85,35 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
       this.getNotification();
-      setTimeout(() => {
-        if (!this.notify) {
-          this.presentAlertConfirm().then(r => {});
-        }
-      }, 1000);
     });
   }
 
   getNotification() {
     this.nativeStorage.getItem('notify')
         .then(
-            data => this.notify = data.anotherProperty,
-            error => console.error(error)
+            data => {
+              if (!data.anotherProperty) {
+                this.presentAlertConfirm().then(r => {});
+              }
+              if (data.anotherProperty === 'true') {
+                this.pushOneSignal().then(r => {});
+              }
+            }
         );
   }
 
-  setNotification() {
+  setNotificationTrue() {
     this.nativeStorage
         .setItem('notify', {property: 'value', anotherProperty: 'true'})
         .then(response => {
           this.pushOneSignal().then(data => {});
         });
+  }
+
+  setNotificationFalse() {
+    this.nativeStorage
+        .setItem('notify', {property: 'value', anotherProperty: 'false'})
+        .then(response => {});
   }
 
   removeNotification() {
@@ -124,12 +131,12 @@ export class AppComponent {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            /*this.removeNotification(); action disable notification */
+            this.setNotificationFalse();
           }
         }, {
           text: 'Receber',
           handler: () => {
-            this.setNotification();
+            this.setNotificationTrue();
           }
         }
       ]
