@@ -89,17 +89,14 @@ export class AppComponent {
   }
 
   getNotification() {
-    this.nativeStorage.getItem('notify')
-        .then(
-            data => {
-              if (!data.anotherProperty) {
-                this.presentAlertConfirm().then(r => {});
-              }
-              if (data.anotherProperty === 'true') {
-                this.pushOneSignal().then(r => {});
-              }
-            }
-        );
+    const data = this.nativeStorage.getItem('notify');
+    if (data) {
+      this.pushOneSignal().then(r => {
+      });
+    } else {
+      this.presentAlertConfirm().then(r => {
+      });
+    }
   }
 
   setNotificationTrue() {
@@ -131,7 +128,7 @@ export class AppComponent {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            this.setNotificationFalse();
+            this.removeNotification();
           }
         }, {
           text: 'Receber',
