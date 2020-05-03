@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import {AlertController, Platform} from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import {OneSignal} from '@ionic-native/onesignal/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
   selector: 'app-root',
@@ -84,18 +84,20 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
-      this.getNotification();
+      this.setNotificationFalse();
+      setTimeout(() => {
+        if (this.notify === 'false') {
+          this.presentAlertConfirm().then(r => {});
+        }
+      }, 1000);
     });
   }
 
   getNotification() {
-    const data = this.nativeStorage.getItem('notify');
-    if (data) {
-      this.pushOneSignal().then(r => {
-      });
+    if (!this.nativeStorage.getItem('notify')) {
+      this.presentAlertConfirm().then(r => {});
     } else {
-      this.presentAlertConfirm().then(r => {
-      });
+      this.pushOneSignal().then(r => {});
     }
   }
 
@@ -110,7 +112,7 @@ export class AppComponent {
   setNotificationFalse() {
     this.nativeStorage
         .setItem('notify', {property: 'value', anotherProperty: 'false'})
-        .then(response => {});
+        .then(data => this.notify = data);
   }
 
   removeNotification() {
@@ -120,7 +122,6 @@ export class AppComponent {
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      header: 'Confirm!',
       message: 'Deseja receber notificações?',
       buttons: [
         {
@@ -128,12 +129,12 @@ export class AppComponent {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            this.removeNotification();
+            this.setNotificationFalse();
           }
         }, {
           text: 'Receber',
           handler: () => {
-            this.setNotificationTrue();
+            this.pushOneSignal();
           }
         }
       ]
@@ -157,4 +158,5 @@ export class AppComponent {
 
     this.oneSignal.endInit();
   }
+
 }
