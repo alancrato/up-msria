@@ -86,7 +86,7 @@ export class AppComponent {
       this.splashScreen.hide();
       this.setNotificationFalse();
       setTimeout(() => {
-        if (this.notify === 'false') {
+        if (this.notify.anotherProperty === 'false') {
           this.presentAlertConfirm().then(r => {});
         }
       }, 1000);
