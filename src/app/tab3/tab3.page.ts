@@ -14,9 +14,10 @@ export class Tab3Page implements OnInit {
 
   posts: any [];
   url;
+
   apiKey = 'AIzaSyBuXMVAxc_fiRgXhKeQRpSthWuzdPhkFbM';
-  channelId = 'UCZZPgUIorPao48a1tBYSDgg'; // Devdactic Channel ID
-  apiUrlYtb = 'https://www.googleapis.com/youtube/v3/playlists?key=';
+  channelId = 'UCohJoO304Mf8ti2BoiRx1CQ';
+  apiUrlYtb = 'https://www.googleapis.com/youtube/v3/videos?part=id&key=';
 
   constructor(
       private wordpressService: WpServiceService,
@@ -32,7 +33,8 @@ export class Tab3Page implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPostsTv();
+    /*this.getPostsTv();*/
+    this.getPlaylistsForChannel();
   }
 
   getPostsTv() {
@@ -43,7 +45,7 @@ export class Tab3Page implements OnInit {
   }
 
   getPlaylistsForChannel() {
-    this.http.get(this.apiUrlYtb + this.apiKey + '&channelId=' + this.channelId + '&part=snippet,id&maxResults=20')
+    this.http.get(this.apiUrlYtb + this.apiKey + '&channelId=' + this.channelId)
         .subscribe(data => {
             console.log(data);
         });
