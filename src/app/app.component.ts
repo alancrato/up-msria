@@ -84,9 +84,9 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
-      this.setNotificationFalse();
+      this.getNotification();
       setTimeout(() => {
-        if (this.notify.anotherProperty === 'false') {
+        if (this.notify === 'false') {
           this.presentAlertConfirm().then(r => {});
         }
       }, 1000);
@@ -94,25 +94,20 @@ export class AppComponent {
   }
 
   getNotification() {
-    if (!this.nativeStorage.getItem('notify')) {
-      this.presentAlertConfirm().then(r => {});
-    } else {
-      this.pushOneSignal().then(r => {});
-    }
+    this.nativeStorage.getItem('notify')
+        .then(data => this.notify = data.anotherProperty);
   }
 
   setNotificationTrue() {
     this.nativeStorage
         .setItem('notify', {property: 'value', anotherProperty: 'true'})
-        .then(response => {
-          this.pushOneSignal().then(data => {});
-        });
+        .then(r => {});
   }
 
   setNotificationFalse() {
     this.nativeStorage
         .setItem('notify', {property: 'value', anotherProperty: 'false'})
-        .then(data => this.notify = data);
+        .then(r => {});
   }
 
   removeNotification() {
@@ -135,6 +130,7 @@ export class AppComponent {
           text: 'Receber',
           handler: () => {
             this.pushOneSignal();
+            this.setNotificationTrue();
           }
         }
       ]
