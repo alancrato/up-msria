@@ -12,7 +12,7 @@ export class TabsPage {
       private menu: MenuController,
       private loadingController: LoadingController
   ) {
-    this.presentLoading().then(r => {});
+    /*this.presentLoading().then(r => {});*/
   }
 
   async presentLoading() {
