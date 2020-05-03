@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import set = Reflect.set;
 
 @Component({
   selector: 'app-root',
@@ -85,17 +86,15 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
       this.getNotification();
-      setTimeout(() => {
-        if (this.notify === 'false') {
-          this.presentAlertConfirm().then(r => {});
-        }
-      }, 1000);
     });
   }
 
   getNotification() {
     this.nativeStorage.getItem('notify')
-        .then(data => this.notify = data.anotherProperty);
+        .then(
+            r => this.alertController.create({message: r.anotherProperty}),
+            e => this.presentAlertConfirm()
+        );
   }
 
   setNotificationTrue() {
