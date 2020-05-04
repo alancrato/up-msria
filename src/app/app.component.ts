@@ -77,7 +77,7 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
-      /*this.getNotification();*/
+      this.getNotification();
     });
   }
 
