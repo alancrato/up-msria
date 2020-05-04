@@ -77,14 +77,14 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
-      this.getNotification();
+      /*this.getNotification();*/
     });
   }
 
   getNotification() {
     this.nativeStorage.getItem('notify')
         .then(
-            r => this.alertController.create({message: r.anotherProperty}),
+            r => {},
             e => this.presentAlertConfirm()
         );
   }
@@ -139,9 +139,27 @@ export class AppComponent {
       // do something when notification is received, log
     });
 
-    this.oneSignal.handleNotificationOpened().subscribe(() => {
+    /*this.oneSignal.handleNotificationOpened().subscribe(() => {
       // do something when a notification is opened, log
-    });
+    });*/
+
+    this.oneSignal.handleNotificationOpened()
+        .subscribe(data => {
+          const info = 'Notification opened:\n' + JSON.stringify(data);
+          this.alertController.create({
+            message: info,
+            buttons: [
+              {
+                text: 'Cancelar',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: () => {
+                  /**/
+                }
+              }
+            ]
+          });
+        });
 
     this.oneSignal.endInit();
   }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {WpServiceService} from '../services/wp-service.service';
-import {MenuController} from '@ionic/angular';
+import {LoadingController, MenuController} from '@ionic/angular';
 
 @Component({
   selector: 'app-category',
@@ -21,15 +21,26 @@ export class CategoryPage implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private menu: MenuController,
+      private loadingController: LoadingController,
       public wordpressService: WpServiceService
   ) {
     this.categoryId = this.route.snapshot.paramMap.get('id');
+    this.presentLoading().then(r => {});
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
   }
 
   ngOnInit() {
     setTimeout(() => {
       this.getCategory();
-    }, 10);
+    }, 100);
     this.getPostsCategory();
   }
 
@@ -67,7 +78,7 @@ export class CategoryPage implements OnInit {
       if (this.posts.length === this.maximumPages) {
         event.target.disabled = true;
       }
-    }, 10);
+    }, 1000);
   }
 
   openFirst() {
