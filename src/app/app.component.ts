@@ -144,21 +144,9 @@ export class AppComponent {
     });*/
 
     this.oneSignal.handleNotificationOpened()
-        .subscribe(data => {
-          const info = 'Notification opened:\n' + JSON.stringify(data);
-          this.alertController.create({
-            message: info,
-            buttons: [
-              {
-                text: 'Cancelar',
-                role: 'cancel',
-                cssClass: 'secondary',
-                handler: () => {
-                  /**/
-                }
-              }
-            ]
-          });
+        .subscribe(openResult => {
+          alert(openResult);
+          openResult.notification.payload.launchURL = 'app://o.ionic.starter';
         });
 
     this.oneSignal.endInit();
