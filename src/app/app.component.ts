@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -145,8 +146,7 @@ export class AppComponent {
 
     this.oneSignal.handleNotificationOpened()
         .subscribe(openResult => {
-          alert(openResult);
-          openResult.notification.payload.launchURL = 'app://o.ionic.starter';
+          openResult.notification.payload.launchURL = 'https://g1.globo.com/';
         });
 
     this.oneSignal.endInit();
