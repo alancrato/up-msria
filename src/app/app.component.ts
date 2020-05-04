@@ -149,6 +149,12 @@ export class AppComponent {
           openResult.notification.payload.launchURL = 'https://g1.globo.com/';
         });
 
+    this.oneSignal.handleNotificationOpened().subscribe((jsonData) => {
+      alert(JSON.stringify(jsonData));
+      jsonData.notification.payload.launchURL = 'https://g1.globo.com/';
+      /*this.nav.push(DuyurularPage);*/
+    });
+
     this.oneSignal.endInit();
   }
 
