@@ -17,7 +17,15 @@ const routes: Routes = [
   {
     path: 'category/:id',
     loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
+  },  {
+    path: 'contact',
+    loadChildren: () => import('./contact/contact.module').then( m => m.ContactPageModule)
+  },
+  {
+    path: 'office',
+    loadChildren: () => import('./office/office.module').then( m => m.OfficePageModule)
   }
+
 
 
 ];

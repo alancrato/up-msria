@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 
-import { AlertController, Platform } from '@ionic/angular';
+import {AlertController, MenuController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-import set = Reflect.set;
 
 @Component({
   selector: 'app-root',
@@ -15,16 +14,8 @@ import set = Reflect.set;
 })
 export class AppComponent {
 
-  notify;
-
   public selectedIndex = 0;
   public appPages = [
-    {
-      title: 'Últimas',
-      url: '/',
-      icon: 'home',
-      category_id: 1
-    },
     {
       title: 'Cariri',
       url: '/',
@@ -69,6 +60,7 @@ export class AppComponent {
     }
   ];
   constructor(
+    private menu: MenuController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -152,6 +144,10 @@ export class AppComponent {
     });
 
     this.oneSignal.endInit();
+  }
+
+  closeMenu() {
+    this.menu.close('first').then(r => {});
   }
 
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {WpServiceService} from '../services/wp-service.service';
+import {MenuController} from '@ionic/angular';
 
 @Component({
   selector: 'app-category',
@@ -19,6 +20,7 @@ export class CategoryPage implements OnInit {
 
   constructor(
       private route: ActivatedRoute,
+      private menu: MenuController,
       public wordpressService: WpServiceService
   ) {
     this.categoryId = this.route.snapshot.paramMap.get('id');
@@ -67,4 +69,10 @@ export class CategoryPage implements OnInit {
       }
     }, 10);
   }
+
+  openFirst() {
+    this.menu.enable(true, 'first').then(r => {});
+    this.menu.open('first').then(r => {});
+  }
+
 }

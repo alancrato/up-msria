@@ -33,8 +33,8 @@ export class Tab3Page implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.getPostsTv();*/
-    this.getPlaylistsForChannel();
+    this.getPostsTv();
+    /*this.getPlaylistsForChannel();*/
   }
 
   getPostsTv() {

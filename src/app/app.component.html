@@ -11,36 +11,26 @@
         </ion-card>
 
         <ion-list id="inbox-list">
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="push" [routerLink]="'/category/'+p.category_id" lines="none" detail="false" [class.selected]="selectedIndex == i">
-              <ion-label>{{ p.title }}</ion-label>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="tabs/tab1" lines="none" detail="false">
+              <label>Últimas</label>
             </ion-item>
+            <div *ngFor="let p of appPages; let i = index">
+              <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="'/category/'+p.category_id" lines="none" detail="false" [class.selected]="selectedIndex == i">
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </div>
           </ion-menu-toggle>
         </ion-list>
 
         <div class="divider"></div>
 
-        <pre>
-          {{notify}}
-        </pre>
-
-        <div class="divider"></div>
-
-        <ion-list lines="none">
-          <ion-item>
-            <ion-icon name="logo-whatsapp"></ion-icon> (88) 9 9729-8426
+        <ion-list>
+          <ion-item routerLink="contact" lines="none" detail="false" (click)="closeMenu()">
+            <label>Contatos</label>
           </ion-item>
-          <ion-item>
-            <ion-icon name="logo-facebook"></ion-icon> facebook.com/sitemiseria
-          </ion-item>
-          <ion-item>
-            <ion-icon name="logo-instagram"></ion-icon> instagram.com/sitemiseria
-          </ion-item>
-          <ion-item>
-            <ion-icon name="logo-youtube"></ion-icon> youtube.com/tvmiseria
-          </ion-item>
-          <ion-item>
-            <ion-icon name="call-outline"></ion-icon> Comercial (88) 9 9704-7000
+          <ion-item routerLink="office" lines="none" detail="false" (click)="closeMenu()">
+            <label>Expediente</label>
           </ion-item>
         </ion-list>
 
