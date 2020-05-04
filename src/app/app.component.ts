@@ -144,11 +144,6 @@ export class AppComponent {
       // do something when a notification is opened, log
     });*/
 
-    this.oneSignal.handleNotificationOpened()
-        .subscribe(openResult => {
-          openResult.notification.payload.launchURL = 'https://g1.globo.com/';
-        });
-
     this.oneSignal.handleNotificationOpened().subscribe((jsonData) => {
       alert(JSON.stringify(jsonData));
       jsonData.notification.payload.launchURL = 'https://g1.globo.com/';
