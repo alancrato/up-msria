@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +13,9 @@ import {takeUntil} from 'rxjs/operators';
   providers: [NativeStorage, OneSignal]
 })
 export class AppComponent {
+
+  launchURL;
+  launchURLTwo;
 
   public selectedIndex = 0;
   public appPages = [
@@ -136,18 +138,25 @@ export class AppComponent {
 
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
-    this.oneSignal.handleNotificationReceived().subscribe(() => {
+    this.oneSignal.handleNotificationReceived().subscribe((result) => {
       // do something when notification is received, log
+      alert(result.payload.launchURL);
+      this.launchURL = result.payload.launchURL;
     });
 
     /*this.oneSignal.handleNotificationOpened().subscribe(() => {
       // do something when a notification is opened, log
     });*/
 
-    this.oneSignal.handleNotificationOpened().subscribe((jsonData) => {
+    /*this.oneSignal.handleNotificationOpened().subscribe((jsonData) => {
       alert(JSON.stringify(jsonData));
       jsonData.notification.payload.launchURL = 'https://g1.globo.com/';
-      /*this.nav.push(DuyurularPage);*/
+      this.nav.push(DuyurularPage);
+    });*/
+
+    this.oneSignal.handleNotificationOpened().subscribe((result) => {
+      alert(result.notification.payload.launchURL);
+      this.launchURLTwo = result.notification.payload.launchURL;
     });
 
     this.oneSignal.endInit();
