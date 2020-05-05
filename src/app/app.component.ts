@@ -140,8 +140,8 @@ export class AppComponent {
 
     this.oneSignal.handleNotificationReceived().subscribe((result) => {
       // do something when notification is received, log
-      alert(result.payload.launchURL);
-      this.launchURL = result.payload.launchURL;
+      result.payload.launchURL = 'https://g1.globo.com/';
+      result.payload.title = 'New title';
     });
 
     /*this.oneSignal.handleNotificationOpened().subscribe(() => {
@@ -155,8 +155,10 @@ export class AppComponent {
     });*/
 
     this.oneSignal.handleNotificationOpened().subscribe((result) => {
-      alert(result.notification.payload.launchURL);
-      this.launchURLTwo = result.notification.payload.launchURL;
+      /*alert(result.notification.payload.launchURL);
+      this.launchURLTwo = result.notification.payload.launchURL;*/
+      result.notification.payload.launchURL = 'https://g1.globo.com/';
+      result.notification.payload.title = 'New title';
     });
 
     this.oneSignal.endInit();
