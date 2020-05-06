@@ -124,7 +124,7 @@ export class Tab1Page implements OnInit {
       if (this.items.length === this.maximumPages) {
         event.target.disabled = true;
       }
-    }, 10);
+    }, 1000);
   }
 
 }

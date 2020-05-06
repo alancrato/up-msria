@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
+    path: 'category/:id',
+    loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
+  },
+  {
     path: 'single/:id',
     loadChildren: () => import('./single/single.module').then( m => m.SinglePageModule)
   },
@@ -15,9 +19,6 @@ const routes: Routes = [
     loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
   },
   {
-    path: 'category/:id',
-    loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
-  },  {
     path: 'contact',
     loadChildren: () => import('./contact/contact.module').then( m => m.ContactPageModule)
   },

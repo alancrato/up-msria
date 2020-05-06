@@ -11,6 +11,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class SinglePage implements OnInit {
 
+  getId;
+
   title;
   subtitle;
   author;
@@ -20,27 +22,29 @@ export class SinglePage implements OnInit {
   iframe;
   url;
 
-  categoryId: number;
+  categoryId;
   categoryName: string;
 
   constructor(
       public wordpressService: WpServiceService,
       private route: ActivatedRoute,
       private sanitizer: DomSanitizer
-  ) { }
+  ) {
+      this.getId = this.route.snapshot.paramMap.get('id');
+  }
 
   ngOnInit() {
-    this.getPost();
+    setTimeout(() => {
+        this.getPost();
+    }, 10);
     setTimeout(() => {
           this.getCategory();
       }, 1000);
   }
 
   getPost() {
-    const id = this.route.snapshot.paramMap.get('id');
-
     this.wordpressService
-        .getPost(id)
+        .getPost(this.getId)
         .subscribe(data => {
           this.categoryId = data.categories[0];
           this.author = data.autor;

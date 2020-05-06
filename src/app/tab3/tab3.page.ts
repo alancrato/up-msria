@@ -24,17 +24,10 @@ export class Tab3Page implements OnInit {
       private sanitizer: DomSanitizer,
       private youtube: YoutubeVideoPlayer,
       private http: HttpClient
-  ) {
-    this.getSafeUrl('https://www.youtube.com/embed/dDMg3v6uH9s');
-  }
-
-  getSafeUrl(url) {
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getPostsTv();
-    /*this.getPlaylistsForChannel();*/
   }
 
   getPostsTv() {
@@ -49,6 +42,11 @@ export class Tab3Page implements OnInit {
         .subscribe(data => {
             console.log(data);
         });
+  }
+
+  getSafeUrl(url) {
+    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    // this.getSafeUrl('https://www.youtube.com/embed/dDMg3v6uH9s');
   }
 
 
