@@ -45,11 +45,9 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
-      this.pushOneSignal().then(r => {});
-      this.oneSignal.handleNotificationOpened()
-          .subscribe(result => {
-            result.notification.isAndroid = true;
-          });
+      if (this.platform.is('cordova')) {
+        this.setupPush();
+      }
     });
   }
 
@@ -121,6 +119,47 @@ export class AppComponent {
         });
 
     this.oneSignal.endInit();
+  }
+
+  setupPush() {
+    // I recommend to put these into your environment.ts
+    this.oneSignal.startInit('YOUR ONESIGNAL APP ID', 'YOUR ANDROID ID');
+
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
+
+    // Notifcation was received in general
+    this.oneSignal.handleNotificationReceived().subscribe(data => {
+      const msg = data.payload.body;
+      const title = data.payload.title;
+      const additionalData = data.payload.additionalData;
+      this.showAlert(title, msg, additionalData.task).then(r => {});
+    });
+
+    // Notification was really clicked/opened
+    this.oneSignal.handleNotificationOpened().subscribe(data => {
+      // Just a note that the data is a different place here!
+      const additionalData = data.notification.payload.additionalData;
+
+      this.showAlert('Notification opened', 'You already read this before', additionalData.task).then(r => {});
+    });
+
+    this.oneSignal.endInit();
+  }
+
+  async showAlert(title, msg, task) {
+    const alert = await this.alertController.create({
+      header: title,
+      subHeader: msg,
+      buttons: [
+        {
+          text: `Action: ${task}`,
+          handler: () => {
+            // E.g: Navigate to a specific screen
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   closeMenu() {
