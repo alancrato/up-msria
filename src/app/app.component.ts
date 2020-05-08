@@ -44,7 +44,7 @@ export class AppComponent {
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
-      this.getNotification();
+      this.pushOneSignal().then(r => {});
     });
   }
 
@@ -79,7 +79,6 @@ export class AppComponent {
         }, {
           text: 'Receber',
           handler: () => {
-            this.pushOneSignal();
             this.setNotificationTrue();
           }
         }
@@ -109,8 +108,9 @@ export class AppComponent {
     this.oneSignal.handleNotificationReceived()
         .subscribe((result) => {
           // do something when notification is received, log
-          // result.payload.launchURL = 'app://br.com.miseria/single/result.id';
-          // result.payload.title = 'New title';
+          // result.payload.launchURL = 'app://br.com.msr/single/result.id';
+          result.payload.launchURL = 'https://g1.globo.com';
+          result.payload.title = 'New title';
         });
 
     this.oneSignal.handleNotificationOpened()

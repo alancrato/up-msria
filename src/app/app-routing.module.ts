@@ -26,9 +26,6 @@ const routes: Routes = [
     path: 'office',
     loadChildren: () => import('./office/office.module').then( m => m.OfficePageModule)
   }
-
-
-
 ];
 @NgModule({
   imports: [
