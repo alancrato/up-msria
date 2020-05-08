@@ -140,9 +140,9 @@ export class AppComponent {
       // Just a note that the data is a different place here!
       const additionalData = data.notification.payload.additionalData;
       data.notification.isAndroid = true;
-      data.notification.payload.launchURL = 'https://g1.globo.com';
+      const url = data.notification.payload.launchURL;
 
-      this.showAlert('Notification opened', 'You already read this before', additionalData.task).then(r => {});
+      this.showAlert('Notification opened', 'You already read this before', url).then(r => {});
     });
 
     this.oneSignal.endInit();
