@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -106,15 +107,16 @@ export class AppComponent {
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
     this.oneSignal.handleNotificationReceived()
-        .subscribe((result) => {
-          // do something when notification is received, log
-          // result.payload.launchURL = 'app://br.com.msr/single/result.id';
+        .subscribe(result => {
           result.payload.launchURL = 'https://g1.globo.com';
           result.payload.title = 'New title';
         });
 
     this.oneSignal.handleNotificationOpened()
-        .subscribe((result) => {});
+        .subscribe(result => {
+          result.notification.payload.launchURL = 'https://g1.globo.com';
+          result.notification.payload.title = 'New title';
+        });
 
     this.oneSignal.endInit();
   }
