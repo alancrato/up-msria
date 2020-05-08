@@ -46,6 +46,10 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
       this.pushOneSignal().then(r => {});
+      this.oneSignal.handleNotificationOpened()
+          .subscribe(result => {
+            result.notification.isAndroid = true;
+          });
     });
   }
 
@@ -107,15 +111,13 @@ export class AppComponent {
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
     this.oneSignal.handleNotificationReceived()
-        .subscribe(result => {
-          result.payload.launchURL = 'https://g1.globo.com';
-          result.payload.title = 'New title';
-        });
+        .subscribe(result => {});
 
     this.oneSignal.handleNotificationOpened()
         .subscribe(result => {
-          result.notification.payload.launchURL = 'https://g1.globo.com';
-          result.notification.payload.title = 'New title';
+          result.notification.isAndroid = true;
+          // result.notification.payload.launchURL = 'https://g1.globo.com';
+          // result.notification.payload.title = 'New title';
         });
 
     this.oneSignal.endInit();
