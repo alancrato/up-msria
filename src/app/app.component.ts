@@ -15,8 +15,6 @@ import {Router} from '@angular/router';
 })
 export class AppComponent {
 
-  notification;
-  data;
   public selectedIndex = 0;
   public appPages = [
     { title: 'Cariri', url: '/', icon: 'documents', category_id: 10 },
@@ -57,9 +55,11 @@ export class AppComponent {
   getNotification() {
     this.nativeStorage.getItem('notify')
         .then(response => {
-          this.notification = response.anotherProperty;
-          // this.presentLoading().then(r => {});
-          // this.pushOneSignal().then(r => {});
+          const result = response.anotherProperty;
+          this.presentLoading().then(r => {});
+          if (result === 'true') {
+            this.pushOneSignal().then(r => {});
+          }
         })
         .catch(error => {
           this.presentAlertConfirm().then(r => {});
@@ -68,7 +68,7 @@ export class AppComponent {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      duration: 2000
+      duration: 3000
     });
     await loading.present();
 
