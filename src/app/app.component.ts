@@ -135,8 +135,8 @@ export class AppComponent {
       // this.showAlert('Notification opened', 'You already read this before', additionalData, additionalData.postId).then(r => {});
 
       setTimeout(() => {
-        // return this.router.navigateByUrl('/search');
-        return this.router.navigate(['/single/', {id: additionalData.postId}]);
+        return this.router.navigateByUrl('single/' + additionalData.postId);
+        // return this.router.navigate(['/single/', {id: additionalData.postId}]);
       }, 5000);
     });
 
