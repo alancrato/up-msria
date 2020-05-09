@@ -90,6 +90,7 @@ export class AppComponent {
           text: 'Receber',
           handler: () => {
             this.setNotificationTrue();
+            this.pushOneSignal();
           }
         }
       ]
