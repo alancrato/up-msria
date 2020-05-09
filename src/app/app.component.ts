@@ -133,6 +133,10 @@ export class AppComponent {
       const additionalData = data.notification.payload.additionalData;
 
       this.showAlert('Notification opened', 'You already read this before', additionalData, additionalData.postId).then(r => {});
+
+      setTimeout(() => {
+        return this.router.navigateByUrl('/search');
+      }, 5000);
     });
 
     this.oneSignal.endInit();
@@ -147,7 +151,7 @@ export class AppComponent {
           text: `Action: ${postId}`,
           handler: () => {
             // this.navCtrl.push('single', {id: postId});
-            return this.router.navigate(['/single/', {id: postId}]);
+            // return this.router.navigate(['/single/', {id: postId}]);
           }
         }
       ]
