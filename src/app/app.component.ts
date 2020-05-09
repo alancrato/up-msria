@@ -125,14 +125,15 @@ export class AppComponent {
     // I recommend to put these into your environment.ts
     this.oneSignal.startInit('87a36160-4e53-45a5-a73d-a3a292cd2ece', '1021708848899');
 
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
     // Notifcation was received in general
     this.oneSignal.handleNotificationReceived().subscribe(data => {
       const msg = data.payload.body;
       const title = data.payload.title;
       const additionalData = data.payload.additionalData;
-      this.showAlert(title, msg, additionalData.task).then(r => {});
+      const launchURL = data.payload.launchURL;
+      this.showAlert(title, launchURL, additionalData.task).then(r => {});
     });
 
     // Notification was really clicked/opened
@@ -140,8 +141,9 @@ export class AppComponent {
       // Just a note that the data is a different place here!
       const additionalData = data.notification.payload.additionalData;
       data.notification.isAndroid = true;
-      data.notification.payload.launchURL = 'https://g1.globo.com';
+      data.notification.url = 'https://g1.globo.com';
       const url = data.notification.payload.launchURL;
+      data.notification.payload.launchURL = 'https://g1.globo.com';
 
       this.showAlert('Notification opened', 'You already read this before', url).then(r => {});
     });
