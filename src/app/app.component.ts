@@ -15,6 +15,8 @@ import {Router} from '@angular/router';
 })
 export class AppComponent {
 
+  notification;
+  data;
   public selectedIndex = 0;
   public appPages = [
     { title: 'Cariri', url: '/', icon: 'documents', category_id: 10 },
@@ -47,17 +49,22 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString('#01579b');
       this.splashScreen.hide();
       if (this.platform.is('cordova')) {
-        this.setupPush();
+        this.getNotification();
       }
     });
   }
 
   getNotification() {
     this.nativeStorage.getItem('notify')
-        .then(
-            r => this.presentLoading(),
-            e => this.presentAlertConfirm()
-        );
+        .then(response => {
+          this.notification = response;
+          this.nativeStorage.keys().then(r => this.data = r);
+          // this.presentLoading().then(r => {});
+          // this.pushOneSignal().then(r => {});
+        })
+        .catch(error => {
+          this.presentAlertConfirm().then(r => {});
+        });
   }
 
   async presentLoading() {
@@ -110,54 +117,17 @@ export class AppComponent {
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
     this.oneSignal.handleNotificationReceived()
-        .subscribe(result => {});
+        .subscribe(data => {});
 
     this.oneSignal.handleNotificationOpened()
-        .subscribe(result => {});
+        .subscribe(data => {
+          const additionalData = data.notification.payload.additionalData;
+          setTimeout(() => {
+            return this.router.navigateByUrl('single/' + additionalData.postId);
+          }, 5000);
+        });
 
     this.oneSignal.endInit();
-  }
-
-  setupPush() {
-    // I recommend to put these into your environment.ts
-    this.oneSignal.startInit('87a36160-4e53-45a5-a73d-a3a292cd2ece', '1021708848899');
-
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
-
-    // Notification was received in general
-    this.oneSignal.handleNotificationReceived().subscribe(data => {});
-
-    // Notification was really clicked/opened
-    this.oneSignal.handleNotificationOpened().subscribe(data => {
-      // Just a note that the data is a different place here!
-      const additionalData = data.notification.payload.additionalData;
-
-      // this.showAlert('Notification opened', 'You already read this before', additionalData, additionalData.postId).then(r => {});
-
-      setTimeout(() => {
-        return this.router.navigateByUrl('single/' + additionalData.postId);
-        // return this.router.navigate(['/single/', {id: additionalData.postId}]);
-      }, 5000);
-    });
-
-    this.oneSignal.endInit();
-  }
-
-  async showAlert(title, msg, task, postId) {
-    const alert = await this.alertController.create({
-      header: title,
-      subHeader: msg,
-      buttons: [
-        {
-          text: `Action: ${postId}`,
-          handler: () => {
-            // this.navCtrl.push('single', {id: postId});
-            // return this.router.navigate(['/single/', {id: postId}]);
-          }
-        }
-      ]
-    });
-    await alert.present();
   }
 
   closeMenu() {
