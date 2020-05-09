@@ -147,7 +147,7 @@ export class AppComponent {
           text: `Action: ${postId}`,
           handler: () => {
             // this.navCtrl.push('single', {id: postId});
-            this.router.navigate(['/single/', {id: postId}]);
+            return this.router.navigate(['/single/', {id: postId}]);
           }
         }
       ]
