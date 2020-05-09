@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
-import { AlertController, LoadingController, MenuController, Platform } from '@ionic/angular';
+import {AlertController, LoadingController, MenuController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +34,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     public alertController: AlertController,
     private nativeStorage: NativeStorage,
-    private oneSignal: OneSignal
+    private oneSignal: OneSignal,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -112,11 +113,7 @@ export class AppComponent {
         .subscribe(result => {});
 
     this.oneSignal.handleNotificationOpened()
-        .subscribe(result => {
-          result.notification.isAndroid = true;
-          // result.notification.payload.launchURL = 'https://g1.globo.com';
-          // result.notification.payload.title = 'New title';
-        });
+        .subscribe(result => {});
 
     this.oneSignal.endInit();
   }
@@ -127,39 +124,30 @@ export class AppComponent {
 
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
-    // Notifcation was received in general
-    this.oneSignal.handleNotificationReceived().subscribe(data => {
-      const msg = data.payload.body;
-      const title = data.payload.title;
-      const additionalData = data.payload.additionalData;
-      const launchURL = data.payload.launchURL;
-      this.showAlert(title, launchURL, additionalData.task).then(r => {});
-    });
+    // Notification was received in general
+    this.oneSignal.handleNotificationReceived().subscribe(data => {});
 
     // Notification was really clicked/opened
     this.oneSignal.handleNotificationOpened().subscribe(data => {
       // Just a note that the data is a different place here!
       const additionalData = data.notification.payload.additionalData;
-      data.notification.isAndroid = true;
-      data.notification.url = 'https://g1.globo.com';
-      const url = data.notification.payload.launchURL;
-      data.notification.payload.launchURL = 'https://g1.globo.com';
 
-      this.showAlert('Notification opened', 'You already read this before', url).then(r => {});
+      this.showAlert('Notification opened', 'You already read this before', additionalData, additionalData).then(r => {});
     });
 
     this.oneSignal.endInit();
   }
 
-  async showAlert(title, msg, task) {
+  async showAlert(title, msg, task, postId) {
     const alert = await this.alertController.create({
       header: title,
       subHeader: msg,
       buttons: [
         {
-          text: `Action: ${task}`,
+          text: `Action: ${postId}`,
           handler: () => {
-            // E.g: Navigate to a specific screen
+            // this.navCtrl.push('single', {id: postId});
+            this.router.navigate(['/single/', {id: postId}]);
           }
         }
       ]
