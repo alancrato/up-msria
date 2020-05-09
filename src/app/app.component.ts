@@ -57,8 +57,7 @@ export class AppComponent {
   getNotification() {
     this.nativeStorage.getItem('notify')
         .then(response => {
-          this.notification = response.property;
-          this.nativeStorage.keys().then(r => this.data = r.anotherProperty);
+          this.notification = response.anotherProperty;
           // this.presentLoading().then(r => {});
           // this.pushOneSignal().then(r => {});
         })
