@@ -124,7 +124,7 @@ export class AppComponent {
           const additionalData = data.notification.payload.additionalData;
           setTimeout(() => {
             return this.router.navigateByUrl('single/' + additionalData.postId);
-          }, 1000);
+          }, 3000);
         });
 
     this.oneSignal.endInit();
