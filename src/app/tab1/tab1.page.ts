@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WpServiceService} from '../services/wp-service.service';
-import {Platform} from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import {Router} from '@angular/router';
 
 @Component({
@@ -29,6 +29,7 @@ export class Tab1Page implements OnInit {
   constructor(
       public platform: Platform,
       private router: Router,
+      private navCtrl: NavController,
       private wordpressService: WpServiceService
   ) {}
 
@@ -53,10 +54,16 @@ export class Tab1Page implements OnInit {
   }
 
     backButtonEvent() {
-        this.platform.backButton.subscribeWithPriority(0, () => {
-            const appStr = 'app';
-            navigator[appStr].exitApp();
-        });
+        if (this.platform.is('cordova')) {
+            this.platform.backButton.subscribeWithPriority(0, () => {
+                if (this.router.url === '/tabs/tab1' ) {
+                    const appStr = 'app';
+                    navigator[appStr].exitApp();
+                }  else {
+                    this.navCtrl.back();
+                }
+            });
+        }
     }
 
   doRefresh(event) {
