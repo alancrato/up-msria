@@ -56,8 +56,10 @@ export class AppComponent {
 
   backButtonEvent() {
     this.platform.backButton.subscribeWithPriority(0, () => {
-      const appStr = 'app';
-      navigator[appStr].exitApp();
+      if (this.router.url !== '/tabs/tab1' ) {
+        const appStr = 'app';
+        navigator[appStr].exitApp();
+      }
     });
   }
 
