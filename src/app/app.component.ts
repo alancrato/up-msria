@@ -49,16 +49,6 @@ export class AppComponent {
       this.splashScreen.hide();
       if (this.platform.is('cordova')) {
         this.getNotification();
-        this.backButtonEvent();
-      }
-    });
-  }
-
-  backButtonEvent() {
-    this.platform.backButton.subscribeWithPriority(0, () => {
-      if (this.router.url !== '/tabs/tab1' ) {
-        const appStr = 'app';
-        navigator[appStr].exitApp();
       }
     });
   }

@@ -33,6 +33,7 @@ export class Tab1Page implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.backButtonEvent();
     this.getMch()
         .then(r => {});
     this.getLive()
@@ -50,6 +51,13 @@ export class Tab1Page implements OnInit {
       this.getPosts().then(r => {});
     }, 10);
   }
+
+    backButtonEvent() {
+        this.platform.backButton.subscribeWithPriority(0, () => {
+            const appStr = 'app';
+            navigator[appStr].exitApp();
+        });
+    }
 
   doRefresh(event) {
     /*console.log('Begin async operation');*/
