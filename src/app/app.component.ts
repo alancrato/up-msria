@@ -39,7 +39,6 @@ export class AppComponent {
     private router: Router
   ) {
     this.initializeApp();
-    this.backButtonEvent();
   }
 
   initializeApp() {
@@ -50,21 +49,16 @@ export class AppComponent {
       this.splashScreen.hide();
       if (this.platform.is('cordova')) {
         this.getNotification();
+        this.backButtonEvent();
       }
     });
   }
 
   backButtonEvent() {
-    if (this.platform.is('cordova')) {
-      this.platform.backButton.subscribeWithPriority(0, () => {
-        if (this.router.url === '/tabs/tab1' ) {
-          const appStr = 'app';
-          navigator[appStr].exitApp();
-        }  else {
-          // this.navCtrl.navigateBack('/' + 'Tab1Page').then(r => {});
-        }
-      });
-    }
+    this.platform.backButton.subscribeWithPriority(0, () => {
+      const appStr = 'app';
+      navigator[appStr].exitApp();
+    });
   }
 
   getNotification() {
