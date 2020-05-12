@@ -1,6 +1,5 @@
 import {Component, QueryList, ViewChildren} from '@angular/core';
 import {IonRouterOutlet, MenuController, Platform} from '@ionic/angular';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -13,8 +12,7 @@ export class TabsPage {
 
   constructor(
       private menu: MenuController,
-      private platform: Platform,
-      private router: Router
+      private platform: Platform
   ) {
     // subscription to native back button
     this.platform.backButton.subscribe(() => {

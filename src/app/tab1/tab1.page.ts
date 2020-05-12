@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {WpServiceService} from '../services/wp-service.service';
+import {IonRouterOutlet, Platform} from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -24,9 +25,21 @@ export class Tab1Page implements OnInit {
   liveStatus;
   titleLive;
 
+    @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
+
   constructor(
-      private wordpressService: WpServiceService
-  ) {}
+      private wordpressService: WpServiceService,
+      private platform: Platform
+  ) {
+      // subscription to native back button
+      this.platform.backButton.subscribe(() => {
+          this.routerOutlets.forEach((outlet: IonRouterOutlet) => {
+              if (outlet && outlet.canGoBack()) {
+                  outlet.pop().then(r => {});
+              }
+          });
+      });
+  }
 
   ngOnInit() {
     this.getMch()
