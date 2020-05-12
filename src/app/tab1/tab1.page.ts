@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WpServiceService} from '../services/wp-service.service';
-import {Platform} from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import {Router} from '@angular/router';
 
 @Component({
@@ -25,22 +25,13 @@ export class Tab1Page implements OnInit {
 
   liveStatus;
   titleLive;
-
-  subscription;
-
+  
   constructor(
       public platform: Platform,
       private router: Router,
+      private navCtrl: NavController,
       private wordpressService: WpServiceService
   ) {}
-
-    ionViewDidEnter() {
-        this.subscription = this.platform.backButton
-            .subscribe(() => {
-                const appStr = 'app';
-                navigator[appStr].exitApp();
-            });
-    }
 
   ngOnInit() {
     this.backButtonEvent();
@@ -65,12 +56,11 @@ export class Tab1Page implements OnInit {
     backButtonEvent() {
         if (this.platform.is('cordova')) {
             this.platform.backButton.subscribeWithPriority(0, () => {
-                console.log('this.router.url', this.router.url);
                 if (this.router.url === '/tabs/tab1' ) {
                     const appStr = 'app';
                     navigator[appStr].exitApp();
                 }  else {
-                    // this.navCtrl.navigateBack('/' + 'componetToGo');
+                    this.navCtrl.navigateBack('/' + 'Tab1Page').then(r => {});
                 }
             });
         }
