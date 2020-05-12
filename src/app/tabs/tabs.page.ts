@@ -1,5 +1,5 @@
-import {Component, QueryList, ViewChildren} from '@angular/core';
-import {IonRouterOutlet, MenuController, Platform} from '@ionic/angular';
+import {Component} from '@angular/core';
+import {MenuController} from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs',
@@ -8,21 +8,9 @@ import {IonRouterOutlet, MenuController, Platform} from '@ionic/angular';
 })
 export class TabsPage {
 
-  @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
-
   constructor(
-      private menu: MenuController,
-      private platform: Platform
-  ) {
-    // subscription to native back button
-    this.platform.backButton.subscribe(() => {
-      this.routerOutlets.forEach((outlet: IonRouterOutlet) => {
-        if (outlet && outlet.canGoBack()) {
-          outlet.pop().then(r => {});
-        }
-      });
-    });
-  }
+      private menu: MenuController
+  ) {}
 
   openFirst() {
     this.menu.enable(true, 'first').then(r => {});

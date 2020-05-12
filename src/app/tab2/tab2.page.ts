@@ -30,7 +30,7 @@ export class Tab2Page implements OnInit {
 
   async presentLoading() {
       const loading = await this.loadingController.create({
-          duration: 2000,
+          duration: 4000,
           message: 'Buscando Mais Lidas...'
       });
       await loading.present();
