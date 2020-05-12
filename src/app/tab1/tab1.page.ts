@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WpServiceService} from '../services/wp-service.service';
-import {NavController, Platform} from '@ionic/angular';
+import {Platform} from '@ionic/angular';
 import {Router} from '@angular/router';
 
 @Component({
@@ -25,16 +25,14 @@ export class Tab1Page implements OnInit {
 
   liveStatus;
   titleLive;
-  
+
   constructor(
       public platform: Platform,
       private router: Router,
-      private navCtrl: NavController,
       private wordpressService: WpServiceService
   ) {}
 
   ngOnInit() {
-    this.backButtonEvent();
     this.getMch()
         .then(r => {});
     this.getLive()
@@ -52,19 +50,6 @@ export class Tab1Page implements OnInit {
       this.getPosts().then(r => {});
     }, 10);
   }
-
-    backButtonEvent() {
-        if (this.platform.is('cordova')) {
-            this.platform.backButton.subscribeWithPriority(0, () => {
-                if (this.router.url === '/tabs/tab1' ) {
-                    const appStr = 'app';
-                    navigator[appStr].exitApp();
-                }  else {
-                    this.navCtrl.navigateBack('/' + 'Tab1Page').then(r => {});
-                }
-            });
-        }
-    }
 
   doRefresh(event) {
     /*console.log('Begin async operation');*/

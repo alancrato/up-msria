@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {AlertController, LoadingController, MenuController, Platform} from '@ionic/angular';
+import {AlertController, LoadingController, MenuController, NavController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -30,6 +30,7 @@ export class AppComponent {
     private menu: MenuController,
     private loadingController: LoadingController,
     private platform: Platform,
+    private navCtrl: NavController,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public alertController: AlertController,
@@ -38,6 +39,7 @@ export class AppComponent {
     private router: Router
   ) {
     this.initializeApp();
+    this.backButtonEvent();
   }
 
   initializeApp() {
@@ -50,6 +52,19 @@ export class AppComponent {
         this.getNotification();
       }
     });
+  }
+
+  backButtonEvent() {
+    if (this.platform.is('cordova')) {
+      this.platform.backButton.subscribeWithPriority(0, () => {
+        if (this.router.url === '/tabs/tab1' ) {
+          const appStr = 'app';
+          navigator[appStr].exitApp();
+        }  else {
+          // this.navCtrl.navigateBack('/' + 'Tab1Page').then(r => {});
+        }
+      });
+    }
   }
 
   getNotification() {
