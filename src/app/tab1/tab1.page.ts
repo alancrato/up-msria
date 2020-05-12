@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WpServiceService} from '../services/wp-service.service';
+import {Platform} from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -24,9 +25,21 @@ export class Tab1Page implements OnInit {
   liveStatus;
   titleLive;
 
+  subscription;
+
   constructor(
+      public platform: Platform,
       private wordpressService: WpServiceService
-  ) {}
+  ) {
+      this.ionViewDidEnter();
+  }
+
+    ionViewDidEnter() {
+        this.subscription = this.platform.backButton
+            .subscribe(() => {
+            navigator['app-root'].exitApp();
+        });
+    }
 
   ngOnInit() {
     this.getMch()

@@ -1,6 +1,6 @@
-import {Component, QueryList, ViewChildren} from '@angular/core';
+import {Component} from '@angular/core';
 
-import {AlertController, IonRouterOutlet, LoadingController, MenuController, Platform} from '@ionic/angular';
+import {AlertController, LoadingController, MenuController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -14,8 +14,6 @@ import {Router} from '@angular/router';
   providers: [NativeStorage, OneSignal]
 })
 export class AppComponent {
-
-  @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
 
   public selectedIndex = 0;
   public appPages = [
@@ -40,14 +38,6 @@ export class AppComponent {
     private router: Router
   ) {
     this.initializeApp();
-    // subscription to native back button
-    this.platform.backButton.subscribe(() => {
-      this.routerOutlets.forEach((outlet: IonRouterOutlet) => {
-        if (outlet && outlet.canGoBack()) {
-          outlet.pop().then(r => {});
-        }
-      });
-    });
   }
 
   initializeApp() {
