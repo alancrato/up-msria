@@ -78,7 +78,7 @@ export class CategoryPage implements OnInit {
       if (this.posts.length === this.maximumPages) {
         event.target.disabled = true;
       }
-    }, 1000);
+    }, 2000);
   }
 
   openFirst() {

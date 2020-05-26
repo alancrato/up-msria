@@ -25,7 +25,11 @@ const routes: Routes = [
   {
     path: 'office',
     loadChildren: () => import('./office/office.module').then( m => m.OfficePageModule)
+  },  {
+    path: 'privacy',
+    loadChildren: () => import('./privacy/privacy.module').then( m => m.PrivacyPageModule)
   }
+
 ];
 @NgModule({
   imports: [

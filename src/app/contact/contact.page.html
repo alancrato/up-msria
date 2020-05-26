@@ -13,81 +13,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-list class="mt-1">
+  <ion-list>
     <ion-item>
-      <ion-label>
-        <h1>Redação</h1>
-        <h3>(88)3113-1717</h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h1>Whatsapp</h1>
-        <h3>
-          <ion-icon name="logo-whatsapp"></ion-icon>
-          <a href="https://api.whatsapp.com/send?1=pt_BR&phone=5588997298426" target="_blank">(88) 9 9729-8426</a>
-        </h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h1>Editoria de Polícia</h1>
-        <h3>(88)98147-7000</h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h1>Comercial</h1>
-        <h3>
-          <ion-icon name="call-outline"></ion-icon>
-          (88) 9 9704-7000
-        </h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h1>Classificados</h1>
-        <h3>
-          (88)98863-7636
-        </h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h1>Nossos Emails</h1>
-        <h3>
-          direcao@miseria.com.br  <br/>
-          comercial@miseria.com.br <br/>
-          reportagem@miseria.com.br
-        </h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h1>Facebook</h1>
-        <h3>
-          <ion-icon name="logo-facebook"></ion-icon>
-          <a href="https://facebook.com/sitemiseria" target="_blank">facebook.com/sitemiseria</a>
-        </h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h1>Instagram</h1>
-        <h3>
-          <ion-icon name="logo-instagram"></ion-icon>
-          <a href="https://instagram.com/sitemiseria" target="_blank">instagram.com/sitemiseria</a>
-        </h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h1>Youtube</h1>
-        <h3>
-          <ion-icon name="logo-youtube"></ion-icon>
-          <a href="https://youtube.com/miseriasite" target="_blank"> youtube.com/miseriasite</a>
-        </h3>
-      </ion-label>
+      <ion-label [innerHTML]="content"></ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

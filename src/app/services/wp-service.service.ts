@@ -71,4 +71,8 @@ export class WpServiceService {
   public search(searchStr: string, page: number): any {
       return this.http.get(this.apiUrlV2 + 'posts/?status=publish&search=' + searchStr + '&page=' + page);
   }
+
+  public getPage(id: number): any {
+      return this.http.get(this.apiUrlV2 + 'pages/' + id);
+  }
 }

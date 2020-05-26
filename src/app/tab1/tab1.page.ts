@@ -35,44 +35,33 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.backButtonEvent();
-    this.getMch()
-        .then(r => {});
-    this.getLive()
-        .then(r => {});
-    setTimeout(() => {
-      this.getDest().then(r => {});
-    }, 10);
-    setTimeout(() => {
-      this.getMDest().then(r => {});
-    }, 10);
-    setTimeout(() => {
-      this.getImd().then(r => {});
-    }, 10);
-    setTimeout(() => {
-      this.getPosts().then(r => {});
-    }, 10);
+    this.getMch().then(r => {});
+    this.getLive().then(r => {});
+    this.getDest().then(r => {});
+    this.getMDest().then(r => {});
+    this.getImd().then(r => {});
+    this.getPosts().then(r => {});
   }
 
-    backButtonEvent() {
-        if (this.platform.is('cordova')) {
-            this.platform.backButton.subscribeWithPriority(0, () => {
-                if (this.router.url === '/tabs/tab1' ) {
-                    const appStr = 'app';
-                    navigator[appStr].exitApp();
-                }  else {
-                    this.navCtrl.back();
-                }
-            });
-        }
-    }
+  backButtonEvent() {
+      if (this.platform.is('cordova')) {
+          this.platform.backButton.subscribeWithPriority(0, () => {
+              if (this.router.url === '/tabs/tab1' ) {
+                  const appStr = 'app';
+                  navigator[appStr].exitApp();
+              }  else {
+                  this.navCtrl.back();
+              }
+          });
+      }
+  }
 
   doRefresh(event) {
     /*console.log('Begin async operation');*/
-
     setTimeout(() => {
       /*console.log('Async operation has ended');*/
       event.target.complete();
-    }, 10);
+    }, 1000);
   }
 
   async getLive() {
@@ -129,21 +118,18 @@ export class Tab1Page implements OnInit {
       this.page++;
       this.wordpressService.getPosts(this.page)
           .subscribe(data => {
-            this.items.push({
-               title: 'PUBLICIDADE',
-            });
+            this.items.push({title: 'PUBLICIDADE'});
             for (const item of data) {
               this.items.push(item);
             }
           });
       event.target.complete();
-
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
       if (this.items.length === this.maximumPages) {
         event.target.disabled = true;
       }
-    }, 2);
+    }, 2000);
   }
 
 }
