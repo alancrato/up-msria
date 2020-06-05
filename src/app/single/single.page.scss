@@ -32,7 +32,7 @@ ion-card-subtitle{
   padding: 0 20px 10px;
   margin-top: 1rem;
   font-weight: 400;
-  text-transform: capitalize;
+  /*text-transform: capitalize;*/
   font-size: 1rem;
   line-height: 1.5rem;
   letter-spacing: -.03125rem;
@@ -116,4 +116,8 @@ ion-icon{
 .pub-single img{
   width: 100%;
   height: auto;
+}
+
+.mt-share{
+  margin-top: 10px;
 }

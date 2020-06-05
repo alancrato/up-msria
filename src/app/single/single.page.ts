@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {WpServiceService} from '../services/wp-service.service';
 import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
+import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-single',
   templateUrl: './single.page.html',
   styleUrls: ['./single.page.scss'],
-  providers: [WpServiceService]
+  providers: [WpServiceService, SocialSharing]
 })
 export class SinglePage implements OnInit {
 
@@ -21,6 +22,7 @@ export class SinglePage implements OnInit {
   thumb = [];
   iframe;
   url;
+  link;
 
   categoryId;
   categoryName: string;
@@ -28,7 +30,8 @@ export class SinglePage implements OnInit {
   constructor(
       public wordpressService: WpServiceService,
       private route: ActivatedRoute,
-      private sanitizer: DomSanitizer
+      private sanitizer: DomSanitizer,
+      private socialSharing: SocialSharing
   ) {
       this.getId = this.route.snapshot.paramMap.get('id');
   }
@@ -55,6 +58,7 @@ export class SinglePage implements OnInit {
           this.content = data.content.rendered;
           this.iframe = data.iframe;
           this.url = this.sanitizer.bypassSecurityTrustResourceUrl(data.iframe);
+          this.link = data.link;
         });
   }
 
@@ -63,6 +67,16 @@ export class SinglePage implements OnInit {
           .getCategory(this.categoryId)
           .subscribe(data => {
               this.categoryName = data.name;
+          });
+  }
+
+  sendShare(message, subject, url) {
+      this.socialSharing.share(message, subject, null, url)
+          .then(res => {
+              console.log(res);
+          })
+          .catch(err => {
+              console.log(err);
           });
   }
 
